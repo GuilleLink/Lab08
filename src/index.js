@@ -13,6 +13,7 @@ class App extends Component{
       totalValue: '',
       firstNumber: '',
       lastOperator: '',
+      float: false,
     }
   }
   
@@ -21,32 +22,65 @@ class App extends Component{
     if (value==='C'){
       this.setState({totalValue: ''})
     }
-    else if(value==='+' && this.state.firstNumber===''){
+    else if(value==='.' && !this.state.float){
+      this.setState({totalValue: this.state.totalValue + value, float: true})
+    }
+    else if(value==='.' && this.state.float){
+      this.setState({float: true})
+    }
+    else if(value==='+' && this.state.firstNumber==='' && !this.state.float){
       this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '+'})
     }
-    else if(value==='+' && this.state.firstNumber!==''){
+    else if(value==='+' && this.state.firstNumber!=='' && !this.state.float){
       this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: '+'})
     }
-    else if(value==='-' && this.state.firstNumber===''){
+    else if(value==='+' && this.state.firstNumber==='' && this.state.float){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '+'})
+    }
+    else if(value==='+' && this.state.firstNumber!=='' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) + parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '+'})
+    }
+    else if(value==='-' && this.state.firstNumber==='' && !this.state.float){
       this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '-'})
     }
-    else if(value==='-' && this.state.firstNumber!==''){
+    else if(value==='-' && this.state.firstNumber!=='' && !this.state.float){
       this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: '-'})
     }
-    else if(value==='*' && this.state.firstNumber===''){
+    else if(value==='-' && this.state.firstNumber==='' && this.state.float){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '-'})
+    }
+    else if(value==='-' && this.state.firstNumber!=='' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) - parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '-'})
+    }
+    else if(value==='*' && this.state.firstNumber==='' && !this.state.float){
       this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '*'})
     }
-    else if(value==='*' && this.state.firstNumber!==''){
+    else if(value==='*' && this.state.firstNumber!=='' && !this.state.float){
       this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: '*'})
     }
-    else if(value==='=' && this.state.lastOperator==='+'){
-      this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    else if(value==='*' && this.state.firstNumber==='' && this.state.float){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '*'})
     }
-    else if(value==='=' && this.state.lastOperator==='-'){
-      this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    else if(value==='*' && this.state.firstNumber!=='' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) * parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '*'})
     }
-    else if(value==='=' && this.state.lastOperator==='*'){
-      this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    else if(value==='=' && this.state.lastOperator==='+' && !this.state.float){
+      this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
+    }
+    else if(value==='=' && this.state.lastOperator==='-' && !this.state.float){
+      this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
+    }
+    else if(value==='=' && this.state.lastOperator==='*' && !this.state.float){
+      this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
+    }
+    else if(value==='=' && this.state.lastOperator==='+' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) + parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
+    }
+    else if(value==='=' && this.state.lastOperator==='-' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) - parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
+    }
+    else if(value==='=' && this.state.lastOperator==='*' && this.state.float){
+      this.setState({totalValue: parseFloat(this.state.firstNumber) * parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
     }
     else if(value==='=' && this.state.lastOperator===''){
       this.setState({totalValue: this.state.totalValue, firstNumber: '', lastOperator: ''})
@@ -74,6 +108,7 @@ class App extends Component{
       <Boton id='num9' valor='9' click={this.valueFather} />
       <Boton id='num0' valor='0' click={this.valueFather} />
       <Boton id='clear' valor='C' click={this.valueFather} />
+      <Boton id='period' valor='.' click={this.valueFather} />
       <Boton id='add' valor='+' click={this.valueFather} />
       <Boton id='substract' valor='-' click={this.valueFather} />
       <Boton id='multiply' valor='*' click={this.valueFather} />
