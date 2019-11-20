@@ -10,7 +10,7 @@ class Screen extends Component{
         const { screenValue } = this.props
         return(
             <div className='screendesign'>
-                <h1> Valor: { screenValue } </h1> 
+                <h1> { screenValue } </h1> 
             </div>
         )
     }

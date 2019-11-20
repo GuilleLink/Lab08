@@ -8,13 +8,61 @@ class App extends Component{
   constructor(props){
     super(props)  
     this.valueFather = this.valueFather.bind(this)
-    this.totalValue = this.totalValue.bind(this)
-    this.finalValue = ""
+    
+    this.state={
+      totalValue: '',
+      firstNumber: '',
+      lastOperator: '',
+    }
+  }
+  
+  valueFather(valor){
+    const value = valor.valor
+    if (value==='C'){
+      this.setState({totalValue: ''})
+    }
+    else if(value==='+' && this.state.firstNumber===''){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '+'})
+    }
+    else if(value==='+' && this.state.firstNumber!==''){
+      this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: '+'})
+    }
+    else if(value==='-' && this.state.firstNumber===''){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '-'})
+    }
+    else if(value==='-' && this.state.firstNumber!==''){
+      this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: '-'})
+    }
+    else if(value==='*' && this.state.firstNumber===''){
+      this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '*'})
+    }
+    else if(value==='*' && this.state.firstNumber!==''){
+      this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: '*'})
+    }
+    else if(value==='=' && this.state.lastOperator==='+'){
+      this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    }
+    else if(value==='=' && this.state.lastOperator==='-'){
+      this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    }
+    else if(value==='=' && this.state.lastOperator==='*'){
+      this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: ''})
+    }
+    else if(value==='=' && this.state.lastOperator===''){
+      this.setState({totalValue: this.state.totalValue, firstNumber: '', lastOperator: ''})
+    }
+    else{
+      this.setState({totalValue: this.state.totalValue + value})
+    }
+  }
+
+  totalValue(value){
+
   }
 
   render(){
     return (<div className="calcu">
-      <Screen screenValue='' />
+      <Screen screenValue={this.state.totalValue} />
       <Boton id='num1' valor='1' click={this.valueFather} />        
       <Boton id='num2' valor='2' click={this.valueFather} />
       <Boton id='num3' valor='3' click={this.valueFather} />
@@ -25,18 +73,12 @@ class App extends Component{
       <Boton id='num8' valor='8' click={this.valueFather} />
       <Boton id='num9' valor='9' click={this.valueFather} />
       <Boton id='num0' valor='0' click={this.valueFather} />
+      <Boton id='clear' valor='C' click={this.valueFather} />
+      <Boton id='add' valor='+' click={this.valueFather} />
+      <Boton id='substract' valor='-' click={this.valueFather} />
+      <Boton id='multiply' valor='*' click={this.valueFather} />
+      <Boton id='equals' valor='=' click={this.valueFather} />
     </div>)
-  }
-
-  valueFather(valor){
-    console.log(this.finalValue)
-    this.finalValue = this.finalValue + valor
-    console.log(this.finalValue)
-    console.log(valor)
-  }
-
-  totalValue(value){
-
   }
 }
 
