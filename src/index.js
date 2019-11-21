@@ -14,103 +14,111 @@ class App extends Component{
       firstNumber: '',
       lastOperator: '',
       float: false,
+      error: false
     }
   }
   
   valueFather(valor){
     const value = valor.valor    
-    if(this.state.totalValue.length <=9 || (value==='+' || value==='-' || value==='*' || value==='=' || value==='C'|| value==='AC' || value==='%')){    
+    if((this.state.totalValue.length <=9 || (value==='+' || value==='-' || value==='*' || value==='=' || value==='C'|| value==='AC' || value==='%'))){    
       if (value==='C'){
-        this.setState({totalValue: ''})
+        this.setState({totalValue: '', error: false})
       }
       else if (value==='AC'){
-        this.setState({totalValue: '', firstNumber: '', lastOperator: '', float: false})
+        this.setState({totalValue: '', firstNumber: '', lastOperator: '', float: false, error: false})
       }
-      else if (valor.id==='negPos' && this.state.totalValue.length < 9 && !this.state.float){    
+      else if (valor.id==='negPos' && this.state.totalValue.length < 9 && !this.state.float && !this.state.error){    
         this.setState({totalValue: parseInt(this.state.totalValue) * -1})
       }
-      else if (valor.id==='negPos' && this.state.totalValue.length <9 && this.state.float){
+      else if (valor.id==='negPos' && this.state.totalValue.length <9 && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.totalValue) * -1})
       }
-      else if(value==='%' && !this.state.float){
+      else if(value==='%' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.totalValue) / 100, firstNumber: parseFloat(this.state.totalValue) / 100, float: true})
       }
-      else if(value==='%' && this.state.float){
+      else if(value==='%' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.totalValue) / 100})
       }
-      else if(value==='.' && !this.state.float){
+      else if(value==='.' && !this.state.float && !this.state.error){
         this.setState({totalValue: this.state.totalValue + value, float: true})
       }
-      else if(value==='.' && this.state.float){
+      else if(value==='.' && this.state.float && !this.state.error){
         this.setState({float: true})
       }
-      else if(value==='+' && this.state.firstNumber==='' && !this.state.float){
+      else if(value==='+' && this.state.firstNumber==='' && !this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '+', float: false})
       }
-      else if(value==='+' && this.state.firstNumber!=='' && !this.state.float){
+      else if(value==='+' && this.state.firstNumber!=='' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: '+', float: false})
       }
-      else if(value==='+' && this.state.firstNumber==='' && this.state.float){
+      else if(value==='+' && this.state.firstNumber==='' && this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '+', float: false})
       }
-      else if(value==='+' && this.state.firstNumber!=='' && this.state.float){
+      else if(value==='+' && this.state.firstNumber!=='' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) + parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '+', float: false})
       }
-      else if(value==='-' && this.state.firstNumber==='' && !this.state.float){
+      else if(value==='-' && this.state.firstNumber==='' && !this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '-', float: false})
       }
-      else if(value==='-' && this.state.firstNumber!=='' && !this.state.float){
+      else if(value==='-' && this.state.firstNumber!=='' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: '-', float: false})
       }
-      else if(value==='-' && this.state.firstNumber==='' && this.state.float){
+      else if(value==='-' && this.state.firstNumber==='' && this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '-', float: false})
       }
-      else if(value==='-' && this.state.firstNumber!=='' && this.state.float){
+      else if(value==='-' && this.state.firstNumber!=='' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) - parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '-', float: false})
       }
-      else if(value==='*' && this.state.firstNumber==='' && !this.state.float){
+      else if(value==='*' && this.state.firstNumber==='' && !this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '*', float: false})
       }
-      else if(value==='*' && this.state.firstNumber!=='' && !this.state.float){
+      else if(value==='*' && this.state.firstNumber!=='' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: '*', float: false})
       }
-      else if(value==='*' && this.state.firstNumber==='' && this.state.float){
+      else if(value==='*' && this.state.firstNumber==='' && this.state.float && !this.state.error){
         this.setState({firstNumber: this.state.totalValue, totalValue: '', lastOperator: '*', float: false})
       }
-      else if(value==='*' && this.state.firstNumber!=='' && this.state.float){
+      else if(value==='*' && this.state.firstNumber!=='' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) * parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '*', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='+' && !this.state.float){
+      else if(value==='=' && this.state.lastOperator==='+' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) + parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='-' && !this.state.float){
+      else if(value==='=' && this.state.lastOperator==='-' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) - parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='*' && !this.state.float){
+      else if(value==='=' && this.state.lastOperator==='*' && !this.state.float && !this.state.error){
         this.setState({totalValue: parseInt(this.state.firstNumber) * parseInt(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='+' && this.state.float){
+      else if(value==='=' && this.state.lastOperator==='+' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) + parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='-' && this.state.float){
+      else if(value==='=' && this.state.lastOperator==='-' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) - parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator==='*' && this.state.float){
+      else if(value==='=' && this.state.lastOperator==='*' && this.state.float && !this.state.error){
         this.setState({totalValue: parseFloat(this.state.firstNumber) * parseFloat(this.state.totalValue), firstNumber: '', lastOperator: '', float: false})
       }
-      else if(value==='=' && this.state.lastOperator===''){
+      else if(value==='=' && this.state.lastOperator==='' && !this.state.error){
         this.setState({totalValue: this.state.totalValue, firstNumber: '', lastOperator: ''})
       }
-      else{
+      else if (!this.state.error){
         this.setState({totalValue: this.state.totalValue + value})
       }
     }
     else{
+      //Intento para que no haya mas de 9 numeros
+      //if (this.state.totalValue.length > 9){
+        //this.state.totalValue.substring(0, 8);
+      //}
       if (valor.id==='negPos' && !this.state.float){    
         this.setState({totalValue: parseInt(this.state.totalValue) * -1})
       }
       else if (valor.id==='negPos' && this.state.float){
         this.setState({totalValue: parseFloat(this.state.totalValue) * -1})
+      }
+      else{
+        this.setState({totalValue: 'ERROR', firstNumber: '', lastOperator: '', float: false, error: true})
       }
     }
   }
