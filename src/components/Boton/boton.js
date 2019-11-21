@@ -10,7 +10,7 @@ class Boton extends Component{
         const { id, valor } = this.props
         return(
             <div className="numberbutton">
-                <button type='button' onClick={() => this.returnSimbol({ valor })}> { valor } </button>
+                <button type='button' onClick={() => this.returnSimbol({ id, valor })}> { valor } </button>
             </div>
         )
     }
